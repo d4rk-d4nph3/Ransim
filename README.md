@@ -1,5 +1,5 @@
 # Ransim
-Ransomware Simulator for testing Blue Team Detections and tune their sensors. 
+Ransomware Simulator for testing Blue Team Detections and to tune their sensors. 
 
 ## Description
 Inspired from [Scythe's](https://scythe.webflow.io/library/threatthursday-ransomware) article on emulating ransomware.
@@ -19,6 +19,7 @@ Compiled in Visual Studio 2019. Download the solution folder and build in Visual
 8. Opens that ransom note in notepad and exits.
 
 ## TODO
+
 - [ ] Read Registry Keys.
 - [ ] Add recon functions.
 
