@@ -19,7 +19,7 @@ Compiled in Visual Studio 2019. Download the solution folder and build in Visual
 8. Opens that ransom note in notepad and exits.
 
 ## TODO
-- [] Read Registry Keys.
-- [] Add recon functions.
+- [ ] Read Registry Keys.
+- [ ] Add recon functions.
 
 Thanks to [Carlos](https://github.com/sdkcarlos) for the RSA encryption function.
