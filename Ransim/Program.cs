@@ -1,4 +1,12 @@
-﻿using System;
+﻿########################################################################################
+# Title:        Ransim
+# Author:       d4rk-d4nph3
+# Description:  Ransomware Simulator
+# Version:      0.1
+# Released at:  2020/07/05
+########################################################################################
+
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;

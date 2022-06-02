@@ -1,5 +1,5 @@
 # Ransim
-Ransomware Simulator for testing Blue Team Detections and to tune their sensors. 
+Ransomware Simulator for testing Blue Team Detections and to tune their sensors.
 
 ## Description
 Inspired from [Scythe's](https://scythe.webflow.io/library/threatthursday-ransomware) article on emulating ransomware.
@@ -7,7 +7,7 @@ Inspired from [Scythe's](https://scythe.webflow.io/library/threatthursday-ransom
 ## Build
 Compiled in Visual Studio 2019. Download the solution folder and build in Visual Studio with .Net Framework installed.
 
-## Attack Flow
+## Attack Flow of v0.1
 
 1. Creates a new directory in %USERPROFILE%.
 2. Downloads a JPG image(actually a DLL) to that created directory.
