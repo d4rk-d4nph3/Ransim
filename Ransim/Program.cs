@@ -210,7 +210,7 @@ namespace Ransim
             string tempDirPath = userDirPath + @"\" + tempDir;
 
             // Check if Ransim was ran as Admin
-            if (IsAdministrator() == true)
+            if (IsAdministrator() == false)
             {
                 Console.WriteLine("Please run Ransim as administrator!");
                 Console.WriteLine("Exiting...");
