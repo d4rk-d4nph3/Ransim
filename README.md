@@ -9,7 +9,8 @@ Compiled in Visual Studio 2019. Download the solution folder and build in Visual
 
 ## Execute
 
-Run *Ransim* as administrator.
+- Run *Ransim* as administrator.
+- Disable AV.
 
 ## Note
 
@@ -28,5 +29,24 @@ For example, you can comment out the DisableFirewall() call if you want Ransim t
 8. Upon finishing encrypting all the files in that directory, it downloads the ransom note from pastebin.
 9. Opens that ransom note in notepad.
 10. Self deletes the ransim binary.
+
+# TODO
+
+Add support for following tools:
+
+- Mimikatz
+- ADFind
+- PsExec
+- BloodHound
+- Cobalt Strike
+- PowerView
+- SharpView
+- Invoke-Kerberoast
+- Rubeus
+- Seatbelt
+- WinPwn
+- Net-GPPPassword
+- Rclone/Mega
+- SharpChromium
 
 Thanks to [Carlos](https://github.com/sdkcarlos) for the RSA encryption function.
