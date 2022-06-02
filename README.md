@@ -34,20 +34,17 @@ For example, you can comment out the DisableFirewall() call if you want Ransim t
 
 Add support for following tools:
 
-- Mimikatz
+- [x] Mimikatz
 - [x] LaZagne
-- ADFind
-- PsExec
-- BloodHound
-- Cobalt Strike
+- [x] ADFind
+- [x] PsExec
+- [ ] BloodHound
+- [ ] Cobalt Strike
 - [x] PowerView
-- SharpView
 - [x] Invoke-Kerberoast
-- Rubeus
-- Seatbelt
-- WinPwn
+- [x] Seatbelt
 - [x] Net-GPPPassword
-- Rclone/MegaSync
-- SharpChromium
+- [ ] Rclone/MegaSync
+- [ ] SharpChromium
 
 Thanks to [Carlos](https://github.com/sdkcarlos) for the RSA encryption function.

