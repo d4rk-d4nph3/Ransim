@@ -1,3 +1,6 @@
+:: Taken from: https://github.com/NextronSystems/APTSimulator/blob/master/test-sets/cobaltstrike/cobaltstrike-simulation.bat
+:: Latest commit 64d8acb 
+
 ECHO ===========================================================================
 ECHO Simulate CobaltStrike Beacon Activity
 

@@ -39,7 +39,7 @@ Add support for following tools:
 - [x] ADFind
 - [x] PsExec
 - [ ] BloodHound
-- [ ] Cobalt Strike
+- [x] Cobalt Strike
 - [x] PowerView
 - [x] Invoke-Kerberoast
 - [x] Seatbelt
