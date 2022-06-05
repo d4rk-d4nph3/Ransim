@@ -17,6 +17,12 @@ This project is meant for educational and research purposes only. I am not respo
 
 Compiled in Visual Studio 2019. Download the solution folder and build in Visual Studio with .Net Framework installed.
 
+## Preparation
+
+- Place several dummy files such as documents and pictures in %USERPROFILE%\Reports directory.
+- Ransim only encrypts files in that directory and terminates if it does not find that directory.
+- If the Rclone function is enabled, the files in that directory will be zipped up and exfiltrated to Mega.
+
 ## Execute
 
 - Run *Ransim* as administrator.
@@ -32,13 +38,12 @@ For example, you can comment out the DisableFirewall() call if you want Ransim t
 1. Ransim terminates if it was not ran as administrator.
 2. Ransim terminates if it does not find *Reports* directory in %USERPROFILE% (safety check).
 3. Runs a location check.
-4. Runs a barrage of reconnaissance commands.
-5. Disables AV and firewall.
-6. Disables services.
-7. Starts encrypting all the files only in the *Reports* directory.
-8. Upon finishing encrypting all the files in that directory, it downloads the ransom note from pastebin.
-9. Opens that ransom note in notepad.
-10. Self deletes the ransim binary.
+4. Runs enabled functions such as credential dumpers, cobalt strike simulator, etc.
+5. Disables services.
+6. Starts encrypting all the files only in the *Reports* directory.
+7. Upon finishing encrypting all the files in that directory, it downloads the ransom note from pastebin.
+8. Opens that ransom note in notepad.
+9. Deletes itself.
 
 # TODO
 
