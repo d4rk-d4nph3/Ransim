@@ -39,13 +39,14 @@ For example, you can comment out the DisableFirewall() call if you want Ransim t
 2. Ransim terminates if it does not find *Reports* directory in %USERPROFILE% (safety check).
 3. Runs a location check.
 4. Runs enabled functions such as credential dumpers, cobalt strike simulator, etc.
-5. Disables services.
-6. Starts encrypting all the files only in the *Reports* directory.
-7. Upon finishing encrypting all the files in that directory, it downloads the ransom note from pastebin.
-8. Opens that ransom note in notepad.
-9. Deletes itself.
+5. Exfils data to Mega.
+6. Disables services.
+7. Starts encrypting all the files only in the *Reports* directory.
+8. Upon finishing encrypting all the files in that directory, it downloads the ransom note from pastebin.
+9. Opens that ransom note in notepad.
+10. Deletes itself.
 
-# TODO
+## TODO
 
 Add support for following tools:
 
@@ -60,5 +61,15 @@ Add support for following tools:
 - [x] Seatbelt
 - [x] Net-GPPPassword
 - [x] Rclone + Mega
+
+## Appendix
+
+### RClone configuration guide
+
+If you enable the exfil function, Ransim can exfiltrate the data of the Reports directory. Ransim accomplishes this by zipping all the files of the Reports directory to an archive that it subsequently transfers to [Mega](https://mega.io/) using [RClone](https://rclone.org/).
+
+Just create a free Mega account and download the rclone standalone binary. Then using the free account, create a new remote configuration for Mega. Push that config to your fork. Then, edit the source code so as to use this new config file by Ransim. 
+
+--- 
 
 Thanks to [Carlos](https://github.com/sdkcarlos) for the RSA encryption function.
