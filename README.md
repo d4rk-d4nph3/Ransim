@@ -38,13 +38,12 @@ Add support for following tools:
 - [x] LaZagne
 - [x] ADFind
 - [x] PsExec
-- [ ] BloodHound
+- [x] SharpHound
 - [x] Cobalt Strike
 - [x] PowerView
 - [x] Invoke-Kerberoast
 - [x] Seatbelt
 - [x] Net-GPPPassword
-- [ ] Rclone/MegaSync
-- [ ] SharpChromium
+- [x] Rclone + Mega
 
 Thanks to [Carlos](https://github.com/sdkcarlos) for the RSA encryption function.
