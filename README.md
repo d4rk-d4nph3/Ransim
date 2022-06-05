@@ -1,10 +1,20 @@
 # Ransim
+
+[![Info](https://img.shields.io/static/v1?label=Ransomware&message=Simulator&color=crimson)](https://shields.io/)
+[![Info](https://img.shields.io/static/v1?label=.Net%20Framework&message=C%20Sharp&color=863CA6)](https://shields.io/)
+
 Ransomware Simulator for testing Blue Team Detections and to tune their sensors.
 
 ## Description
+
 Inspired from [Scythe's](https://scythe.webflow.io/library/threatthursday-ransomware) article on emulating ransomware.
 
+## Disclaimer
+
+This project is meant for educational and research purposes only. I am not responsible for this project being used for malicious purpose.
+
 ## Build
+
 Compiled in Visual Studio 2019. Download the solution folder and build in Visual Studio with .Net Framework installed.
 
 ## Execute
